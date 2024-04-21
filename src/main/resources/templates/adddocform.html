@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru,en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Documents List</title>
+        <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}" />
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>ADD Documents</h1>
+    Hello Logged user: <span sec:authentication="name"></span>
+    Your Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN, ROLE_MANAGER]</span>
+</div>
+<div class="topnav">
+    <a th:href="@{/documents/list}">All documents</a>
+    <a  th:href="@{/logout}">Logout</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/list}">Users list</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/departments/list}">Departments list</a>
+    <a th:href="@{/users/information}">Personal Area</a>
+</div>
+
+<form action="#" th:action="@{'/departments/adddocument-'+ ${depId}}" method="post" th:object="${department}">
+
+    <label class="form-group mb-3">To departments:</label>
+    <select th:field="*{documents}" /><br/>
+    <option th:each="d : ${documentlist}" th:value="${d.id}" th:text="${d.name}"></option>
+    </select>
+</form>
+
+</body>
+</html>

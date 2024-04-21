@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru,en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Information</title>
+        <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}" />
+</head>
+<body>
+<div class="header">
+    <h1>My information</h1>
+    Hello Logged user: <span sec:authentication="name"></span>
+    Your Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN, ROLE_MANAGER]</span>
+</div>
+<br>
+    <div class="topnav">
+        <a th:href="@{'/users/view-user-' + ${user.id}}">Лист ознакомления</a>
+        <a  th:href="@{/users/view-documents}">Новые документы для ознакомления</a>
+        <a  th:href="@{'/users/updatepassword'}">Изменить пароль</a>
+    </div>
+</body>
+</html>

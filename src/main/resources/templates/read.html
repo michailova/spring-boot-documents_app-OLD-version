@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en,ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>Read document</title>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}" />
+</head>
+<body>
+<div class="header">
+    <h1>Read Document</h1>
+    Hello Logged user: <span sec:authentication="name"></span>
+    Your Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN, ROLE_MANAGER]</span>
+</div>
+<div class="topnav">
+    <a th:href="@{/documents/list}">All documents</a>
+    <a  th:href="@{/logout}">Logout</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/list}">Users list</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/departments/list}">Departments list</a>
+    <a th:href="@{/users/information}">Personal Area</a>
+</div>
+    <form action="#" th:action="@{'/documents/view-document-' + ${docId}}"  th:object="${document}" />
+<embed th:src="@{${document.path}}"  type="application/pdf" height="100%" width="100%">
+</form>
+
+<form action="#" th:action="@{'/documents/view-document-' + ${docId}}"  method="post" th:object="${document}" />
+    <button type="submit">Подтвердить ознакомление</button>
+</form>
+
+</body>
+</html>

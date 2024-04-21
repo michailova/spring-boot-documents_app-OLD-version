@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en, ru", xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Update department</title>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}" />
+</head>
+<body>
+<div class="header">
+    <h1>Update department</h1>
+    Hello Logged user: <span sec:authentication="name"></span>
+    Your Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN, ROLE_MANAGER]</span>
+</div>
+<div class="topnav">
+    <a th:href="@{/documents/list}">All Documents</a>
+    <a  th:href="@{/logout}">Logout</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/list}">Users list</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/departments/list}">Departments list</a>
+</div>
+<br>
+    <form action="#" th:action="@{'/departments/update-department-' + ${depId}}" method="post" th:object="${department}">
+        <label>Name:</label>
+        <input type="text" th:field="*{name}"  /><br/>
+        <br>
+        <label>Status:</label>
+        <input type="text" th:field="*{status}" /><br/>
+        <br>
+        <label>Number:</label>
+        <input type="number" th:field="*{number}" /><br/>
+
+        <br>
+        <button type="submit">Save</button>
+    </form>
+<br>
+</div>
+</body>
+</html>

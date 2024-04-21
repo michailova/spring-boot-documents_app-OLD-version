@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en, ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>Departments List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}" />
+
+</head>
+
+<body>
+<!--<table class="table" align="center"  border="collapse">-->
+<div class="header">
+<h1>Departments</h1>
+</div>
+<div class="topnav">
+    <a th:href="@{/documents/list}">All documents</a>
+    <a  th:href="@{/logout}">Logout</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/list}">Users list</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/departments/list}">Departments list</a>
+    <a th:href="@{/users/information}">Personal Area</a>
+</div>
+<table class="table">
+    <tr align="center">
+        <th>Name</th>
+        <th>Status</th>
+        <th>Number</th>
+        <th width="100"></th>
+        <th width="100"></th>
+        <th width="100"></th>
+        <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')">
+            <th width="100"></th>
+        </div>
+    </tr>
+    <tr align="center" th:each="dep: ${departments}">
+        <td th:text="${dep.name}"/></td>
+        <td th:text="${dep.status}"/></td>
+        <td th:text="${dep.number}"/></td>
+        <td><a th:href="@{'/departments/delete-department-' + ${dep.id}}">delete</a></td>
+        <td><a th:href="@{'/departments/update-department-' + ${dep.id}}">update</a></td>
+        <td><a th:href="@{'/departments/view-documents-' + ${dep.id}}">view documents</a></td>
+        <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')">
+            <td><a th:href="@{'/departments/adddocument-'+ ${dep.id}}">add document</a></td>
+        </div>
+    </tr>
+
+    <div class="footer">
+    <form th:action="newdepartmentform" method="get">
+        <input type="submit" value="Add department"/>
+    </form>
+    </div>
+</table>
+</body>
+</html>

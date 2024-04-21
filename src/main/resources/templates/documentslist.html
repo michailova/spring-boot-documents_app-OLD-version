@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru,en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Documents List</title>
+        <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}" />
+
+</head>
+
+<body>
+<div class="header">
+    <h1>Documents</h1>
+    Hello Logged user: <span sec:authentication="name"></span>
+    Your Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN, ROLE_MANAGER]</span>
+</div>
+
+<div class="topnav">
+    <a th:href="@{/documents/list}">All documents</a>
+    <a  th:href="@{/logout}">Logout</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/list}">Users list</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/departments/list}">Departments list</a>
+    <a th:href="@{/users/information}">Personal Area</a>
+</div>
+
+    <div th:each="t: ${documenttypeslist}">
+        <a th:href="@{'/documents/type-' + ${t.name}}" ><span th:text="*{t.name}"/></a>
+    </div>
+<br>
+<form method="get" action="search">
+    <input type="text" name="keyword" />
+    <input type="submit" value="Search" />
+</form>
+
+<table class="table">
+    <tr align="center">
+        <th>Designation</th>
+        <th>Name</th>
+        <th>Canceled document</th>
+        <th>Status</th>
+        <th>Revision interval</th>
+        <th>Replacing document</th>
+        <th>Valid from</th>
+        <th>Valid until</th>
+        <th>Developer department</th>
+        <th>Owner department</th>
+        <th>Document type</th>
+        <th width="100"></th>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <th width="100"></th>
+        </div>
+    </tr>
+
+<tr th:each="d: ${documents}">
+    <td th:text="${d.designation}?: '  '" />
+    <td th:text="${d.name}?: '  '" />
+    <td><a th:href="@{/documents/canc-{docId}(docId=${d.id})}"><span th:text="${d.canceled_document}?: ' '" /></a></td>
+    <td th:text="${d.status}?: '  '" />
+    <td th:text="${d.revision_interval}?: 'Не предусмотрен'" />
+    <td><a th:href="@{/documents/repl-{docId}(docId=${d.id})}"><span th:text="${d.replacing_document}" /></a></td>
+    <td th:text="${d.valid_from}?: '  '" />
+    <td th:text="${d.valid_until}?: '  '" />
+    <td th:text="${d.developer.name}?: '  '" />
+    <td th:text="${d.owner.name}?: '  '" />
+    <td th:text="${d.type.name}?: '  '" />
+    <td><a th:href="@{'/documents/view-document-' + ${d.id}}" >read</a></td>
+    <br>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <td><a th:href="@{'/documents/delete-document-' + ${d.id}}">delete</a></td>
+    </div>
+
+</tr>
+</table>
+<div class="footer" sec:authorize="hasRole('ROLE_ADMIN')">
+<form th:action="addocumentform" method="get">
+    <input type="submit" value="Add Document"/>
+</form>
+</div>
+
+</body>
+</html>

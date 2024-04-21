@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru,en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Update document</title>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}" />
+</head>
+<body>
+<div class="header">
+    <h1>Update document</h1>
+    Hello Logged user: <span sec:authentication="name"></span>
+    Your Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN, ROLE_MANAGER]</span>
+</div>
+<div class="topnav">
+    <a th:href="@{/documents/list}">All Documents</a>
+    <a  th:href="@{/logout}">Logout</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/list}">Users list</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/departments/list}">Departments list</a>
+</div>
+  <br>
+    <form action="#" th:action="@{'/documents/update-document-'+ ${docId}}" method="post" th:object="${document}">
+        <label>Designation:</label>
+        <input type="text" th:field="*{designation}" /><br/>
+        <br>
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" /><br/>
+        <br>
+
+        <label>Status:</label>
+        <select th:field="*{status}"/><br/>
+        <option th:each="d : ${documentstatuslist}" th:value="${d}" th:text="${d}"></option>
+        </select>
+        </br>
+        <br>
+        <label>Revision interval:</label>
+        <input type="text" th:field="*{revision_interval}" /><br/>
+        <br>
+        <label>Replacing document:</label>
+        <select th:field="*{replacing_document}"/><br/>
+        <option label="" value="${null}"/>
+        <option th:each="d : ${documentlist}" th:value="${d.id}" th:text="${d.designation + d.name}"></option>
+        </select>
+        </br>
+        <br>
+        <label>Valid from:</label>
+        <input type="date" th:field="*{valid_from}" /><br/>
+        <br>
+        <label>Valid until:</label>
+        <input type="date" th:field="*{valid_until}" /><br/>
+        <br>
+        <label>Developer department:</label>
+        <select th:field="*{developer}"/><br/>
+        <option th:each="d : ${departmentslist}" th:value="${d.id}" th:text="${d.name}"></option>
+        </select>
+        </br>
+        <br>
+
+        <label>Owner department:</label>
+        <select th:field="*{owner}"/><br/>
+        <option th:each="d : ${departmentslist}" th:value="${d.id}" th:text="${d.name}"></option>
+        </select>
+        </br>
+        <br>
+
+        <label>Type:</label>
+        <select th:field="*{type}"/><br/>
+        <option th:each="d : ${documenttypeslist}" th:value="${d.id}" th:text="${d.name}"></option>
+        </select>
+        </br>
+        <br>
+        <label>Path:</label>
+        <input type="text" th:field="*{path}" /><br/>
+        <br>
+        <label>To departments:</label>
+        <select th:field="*{departments}" multiple="true" /><br/>
+        <option th:each="d : ${departmentslist}" th:value="${d.id}" th:text="${d.name}"></option>
+        </select>
+        <br/>
+        <br>
+        <button type="submit">Save</button>
+    </form>
+
+    <br>
+    <form th:action="list" method="get">
+        <input type="submit" value="Return documents list"/>
+    </form>
+</div>
+</body>
+</html>

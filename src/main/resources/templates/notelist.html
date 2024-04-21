@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>Notes</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}" />
+</head>
+<body>
+<div class="header">
+    <h1>Notes</h1>
+    Hello Logged user: <span sec:authentication="name"></span>
+    Your Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN, ROLE_MANAGER]</span>
+</div>
+<!--<br>-->
+<!--<form method="get" action="search">-->
+<!--    <input type="text" name="keyword" />-->
+<!--    <input type="submit" value="Search" />-->
+<!--</form>-->
+<div class="topnav">
+    <a th:href="@{/documents/list}">All documents</a>
+    <a  th:href="@{/logout}">Logout</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/list}">Users list</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/departments/list}">Departments list</a>
+    <a th:href="@{/users/information}">Personal Area</a>
+</div>
+<table class="table">
+    <tr align="center">
+        <th>Document</th>
+        <th>User</th>
+        <th>Status</th>
+        <th>Time</th>
+    </tr>
+
+<tr th:each="n: ${notes}">
+    <td th:text="${n.document.designation +' '+ n.document.name}" />
+    <td th:text="${n.user.person_number}" />
+    <td th:text="${n.status}" />
+    <td th:text="${n.timestamp}" />
+</table>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+CREATE TABLE `user_log` (
+  `action` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `action_time` timestamp NULL DEFAULT NULL,
+  `id` int(11) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` bit(1) DEFAULT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `login` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `person_number` int(11) DEFAULT NULL,
+  `department_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `documents_log` (
+  `action` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `action_time` timestamp NULL DEFAULT NULL,
+  `id` int(11) DEFAULT NULL,
+  `canceled_document` int(11) DEFAULT NULL,
+  `created_ts` datetime(6) DEFAULT NULL,
+  `designation` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `replacing_document` int(11) DEFAULT NULL,
+  `replacing_documents` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `revision_interval` datetime(6) DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_ts` datetime(6) DEFAULT NULL,
+  `valid_from` date DEFAULT NULL,
+  `valid_until` date DEFAULT NULL,
+  `developer_id` int(11) DEFAULT NULL,
+  `owner_id` int(11) DEFAULT NULL,
+  `document_type_id` int(11) DEFAULT NULL,
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

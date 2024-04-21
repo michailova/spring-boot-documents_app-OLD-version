@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en, ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Update user</title>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}" />
+</head>
+<body>
+<div class="header">
+    <h1>Update user</h1>
+    Hello Logged user: <span sec:authentication="name"></span>
+    Your Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN, ROLE_MANAGER]</span>
+</div>
+<div class="topnav">
+    <a th:href="@{/documents/list}">All Documents</a>
+    <a  th:href="@{/logout}">Logout</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/list}">Users list</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/departments/list}">Departments list</a>
+</div>
+   <br>
+    <form action="#" th:action="@{'/users/update-user-' + ${userId}}" method="post" th:object="${user}">
+        <label>First name:</label>
+        <input type="text" th:field="*{first_name}"/><br/>
+        <br>
+        <label>Last name:</label>
+        <input type="text" th:field="*{last_name}"/><br/>
+        <br>
+        <label>Person number:</label>
+        <input type="number" th:field="*{person_number}"/><br/>
+        <br>
+        <label>Department:</label>
+        <input type="text" th:field="*{department}"/><br/>
+        <br>
+        <label>Email:</label>
+        <input type="text" th:field="*{email}"/><br/>
+        <br>
+        <label>Profiles:</label>
+        <select class="form-control input-sm" id="type">
+            <option value="0">select profiles</option>
+            <option th:each="p : ${roles}" th:value="${p}" th:text="${p}"></option>
+        </select>
+        <br/>
+        <br>
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

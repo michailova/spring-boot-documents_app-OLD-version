@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en,ru">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Search result</title>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}" />
+</head>
+<body>
+<div class="header">
+    <h1>Search result</h1>
+    Hello Logged user: <span sec:authentication="name"></span>
+    Your Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN, ROLE_MANAGER]</span>
+</div>
+<div class="topnav">
+    <a th:href="@{/documents/list}">All documents</a>
+    <a  th:href="@{/logout}">Logout</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/list}">Users list</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/departments/list}">Departments list</a>
+    <a th:href="@{/users/information}">Personal Area</a>
+</div>
+<table class="table">
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Department</th>
+        <th>Person Number</th>
+        <th>Email</th>
+        <th>Is Active</th>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <th width="100"></th>
+        </div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <th width="100"></th>
+        </div>
+        <th width="100"></th>
+    </tr>
+
+    <tr th:each="u: ${result}">
+        <td th:text="${u.firstName}" />
+        <td th:text="${u.lastName}" />
+        <td th:text="${u.department.name}" />
+        <td th:text="${u.person_number}" />
+        <td th:text="${u.email}" />
+        <td th:text="${u.isActive}" />
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <td><a th:href="@{'/users/delete-user-' + ${u.id}}">delete</a></td>
+        </div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <td><a th:href="@{'/users/update-user-' + ${u.id}}">update</a></td>
+        </div>
+        <td><a th:href="@{'/users/view-user-' + ${u.id}}">wiev documents</a></td>
+        <td><a th:href="@{'/users/add-documents-user-' + ${u.id}}">add documents</a></td>
+    </tr>
+</table>
+
+</body>
+</html>
