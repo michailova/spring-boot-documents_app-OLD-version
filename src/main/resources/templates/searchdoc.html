@@ -52,7 +52,7 @@
         <td th:text="${d.developer.name}?: '  '" />
         <td th:text="${d.owner.name}?: '  '" />
         <td th:text="${d.type.name}?: '  '" />
-        <td><a th:href="@{'/documents/read-documents-' + ${d.id}}" >read</a></td>
+        <td><a th:href="@{'/documents/all/view-document-' + ${d.id}}" >read</a></td>
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <td><a th:href="@{'/documents/delete-document-' + ${d.id}}">delete</a></td>
         </div>

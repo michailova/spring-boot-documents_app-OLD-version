@@ -59,7 +59,7 @@ public class DocumentControllerMVC {
         return "documentslist";
     }
 
-    @GetMapping(value = { "/type-{type}"})
+    @GetMapping(value = { "/all/type-{type}"})
     public String listDocumentsByType(ModelMap model, @PathVariable String type) {
 
         List<Document> documents = documentService.getAllByType(type);
@@ -139,7 +139,7 @@ public class DocumentControllerMVC {
 //    }
 
 
-    @GetMapping(value = {"/view-document-{docId}"})
+    @GetMapping(value = {"/all/view-document-{docId}"})
     public String viewDocument(@PathVariable Integer docId, Model model) {
         logger.info("read document started");
         Document document = documentService.getById(docId);
@@ -177,7 +177,7 @@ public class DocumentControllerMVC {
     }
 
 
-    @RequestMapping(value = "/view-document-{docId}",method = RequestMethod.POST)
+    @RequestMapping(value = "/all/view-document-{docId}",method = RequestMethod.POST)
     public String familiarization(Model model, @PathVariable Integer docId) {
         Document document = documentService.getById(docId);
         model.addAttribute("path", document.getPath());
@@ -199,7 +199,7 @@ public class DocumentControllerMVC {
        return "index";
 
     }
-    @RequestMapping(value = {"/repl-{docId}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/all/repl-{docId}"}, method = RequestMethod.GET)
     public String viewReplDoc(Model model, @PathVariable Integer docId) {
         Document document = documentService.getById(docId).getReplacing_document();
         model.addAttribute("document", document);
@@ -210,7 +210,7 @@ public class DocumentControllerMVC {
 
     }
 
-    @RequestMapping(value = {"/canc-{docId}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/all/canc-{docId}"}, method = RequestMethod.GET)
     public String viewCansDoc(Model model, @PathVariable Integer docId) {
         Document document = documentService.getById(docId).getCanceled_document();
         model.addAttribute("document", document);

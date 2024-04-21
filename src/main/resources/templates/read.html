@@ -18,11 +18,11 @@
     <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/departments/list}">Departments list</a>
     <a th:href="@{/users/information}">Personal Area</a>
 </div>
-    <form action="#" th:action="@{'/documents/view-document-' + ${docId}}"  th:object="${document}" />
-<embed th:src="@{${document.path}}"  type="application/pdf" height="100%" width="100%">
+    <form action="#" th:action="@{'/documents/all/view-document-' + ${docId}}"  th:object="${document}" />
+<embed th:src="@{${document.path}}"  type="application/pdf" height="1000" width="1200">
 </form>
 
-<form action="#" th:action="@{'/documents/view-document-' + ${docId}}"  method="post" th:object="${document}" />
+<form action="#" th:action="@{'/documents/all/view-document-' + ${docId}}"  method="post" th:object="${document}" />
     <button type="submit">Подтвердить ознакомление</button>
 </form>
 

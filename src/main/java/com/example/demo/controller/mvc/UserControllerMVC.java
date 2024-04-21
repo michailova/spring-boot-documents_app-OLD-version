@@ -159,7 +159,7 @@ public class UserControllerMVC {
 
     @RequestMapping("/information")
     public String information(Model model) {
-        final String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findUserByEmail(currentUserEmail);
         model.addAttribute("user", user);
         return "information";
@@ -170,7 +170,7 @@ public class UserControllerMVC {
         logger.info("viewDocument started");
         final String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findUserByEmail(currentUserEmail);
-        List<Document> documents = departmentService.getDocumentsByDepartmentId(user.getDepartment().getId());
+        List<Document> documents = userService.getDocumentsByUserId(user.getId());
         model.addAttribute("documents", documents);
         return "documentslist";
     }

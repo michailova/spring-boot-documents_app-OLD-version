@@ -177,11 +177,12 @@ public class UserServiceImpl implements UserService {
                 users) {
             if (u.getEmail().equals(email)) {
                 user = u;
-            } else {
-                throw new RuntimeException("User with email:" + email + " not exist");
             }
         }
-        return user;
+        if (user != null) {
+            return user;
+        }
+            throw new RuntimeException("Could not find  user with email:" + email);
     }
 
     private UserProfile checkProfileExist(){

@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Document;
 import com.example.demo.model.Note;
+import com.example.demo.model.User;
 import com.example.demo.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,18 @@ public class NoteServiceImpl implements NoteService{
     @Autowired
     NoteRepository noteRepository;
 
+    @Autowired
+    UserService userService;
+
     @Override
     public Note addNote(Note note) {
         Note noteSave = new Note() ;
+        User user = note.getUser();
+        Document document = note.getDocument();
+        List<Document> documents = user.getDocuments();
+        documents.remove(document);
+        user.setDocuments(documents);
+        userService.updateUser(user.getId(), userService.mapEntityToDtoUser(user));
         return noteRepository.save(note);
 
     }

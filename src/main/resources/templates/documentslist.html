@@ -26,7 +26,7 @@
 </div>
 
     <div th:each="t: ${documenttypeslist}">
-        <a th:href="@{'/documents/type-' + ${t.name}}" ><span th:text="*{t.name}"/></a>
+        <a th:href="@{'/documents/all/type-' + ${t.name}}" ><span th:text="*{t.name}"/></a>
     </div>
 <br>
 <form method="get" action="search">
@@ -56,16 +56,16 @@
 <tr th:each="d: ${documents}">
     <td th:text="${d.designation}?: '  '" />
     <td th:text="${d.name}?: '  '" />
-    <td><a th:href="@{/documents/canc-{docId}(docId=${d.id})}"><span th:text="${d.canceled_document}?: ' '" /></a></td>
+    <td><a th:href="@{/documents/all/canc-{docId}(docId=${d.id})}"><span th:text="${d.canceled_document}?: ' '" /></a></td>
     <td th:text="${d.status}?: '  '" />
     <td th:text="${d.revision_interval}?: 'Не предусмотрен'" />
-    <td><a th:href="@{/documents/repl-{docId}(docId=${d.id})}"><span th:text="${d.replacing_document}" /></a></td>
+    <td><a th:href="@{/documents/all/repl-{docId}(docId=${d.id})}"><span th:text="${d.replacing_document}" /></a></td>
     <td th:text="${d.valid_from}?: '  '" />
     <td th:text="${d.valid_until}?: '  '" />
     <td th:text="${d.developer.name}?: '  '" />
     <td th:text="${d.owner.name}?: '  '" />
     <td th:text="${d.type.name}?: '  '" />
-    <td><a th:href="@{'/documents/view-document-' + ${d.id}}" >read</a></td>
+    <td><a th:href="@{'/documents/all/view-document-' + ${d.id}}" >read</a></td>
     <br>
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <td><a th:href="@{'/documents/delete-document-' + ${d.id}}">delete</a></td>
