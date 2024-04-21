@@ -1,0 +1,1 @@
+The document management project allows you to systematize the document flow process, automate the processes of distributing documents and familiarizing users with them, recording and monitoring documents for their timely replacement, saving historical data on documents
